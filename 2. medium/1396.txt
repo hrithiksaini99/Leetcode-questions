@@ -1,0 +1,24 @@
+class UndergroundSystem {
+public:
+    unordered_map<int, pair<string, int>> ci; 
+    unordered_map<string, pair<double, int>> maap; 
+    
+    UndergroundSystem() {}
+    
+    void checkIn(int id, string stationName, int t) {
+        ci[id] = {stationName, t};
+    }
+    
+    void checkOut(int id, string stationName, int t) {
+        auto checkin = ci[id];
+        string route = checkin.first +" "+ stationName;
+        maap[route].first += t - checkin.second;
+        maap[route].second += 1;
+    }
+    
+    double getAverageTime(string startStation, string endStation) {
+        string routekey = startStation+" "+endStation;
+        auto& route = maap[routekey];
+        return route.first / route.second;
+    }
+};
