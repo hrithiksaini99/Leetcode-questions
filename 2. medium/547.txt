@@ -1,0 +1,28 @@
+class Solution {
+public:
+     void dfs (unordered_map <int, vector<int> > graph, vector<int> &visited, int node){
+         visited[node] = 1;
+         for(int i=0; i<graph[node].size(); i++){
+             if(!visited[ graph[node][i] ])
+                dfs(graph, visited, graph[node][i]);
+         }
+     }
+    int findCircleNum(vector<vector<int>>& isConnected) {
+        unordered_map <int, vector<int> > graph;
+        for(int i=0; i<isConnected.size(); i++){
+            for(int j=0; j<isConnected.size(); j++){
+                if(isConnected[i][j])
+                    graph[i].push_back(j);
+            }
+        }
+        int ans=0;
+        vector<int> visited(isConnected.size(), 0);
+        for(int i=0; i<isConnected.size(); i++){
+            if(!visited[i]){
+                ans++;
+                dfs(graph, visited, i);
+            }
+        }
+        return ans;
+    }
+};
